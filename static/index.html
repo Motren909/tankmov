@@ -59,6 +59,7 @@
         <button type="button" class="btn btn-primary basic-button" onclick="setMode('PID');">PID mode</button>
         <button type="button" class="btn btn-warning basic-button" onclick="setMode('PWM');">PWM mode</button>
         <button type="button" class="btn btn-success basic-button" onclick="sync();" style="width:60px; float: right;">Sync</button>
+        <button type="button" class="btn btn-success basic-button" onclick="signal();" style="width:60px; float: right;">Signal</button>
     </div>
     <hr style="filter: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 size=3>
     <div>
@@ -239,6 +240,12 @@
         pwmSet(motor, pwm[motor] + delta);
     }
 
+
+    function signal(){
+        $.get("signal", function(result) {
+            updateView(result);
+        });
+    }
     var slider1 = null;
     var slider2 = null;
     $(function () {

@@ -192,8 +192,7 @@ volatile int pwm0 = 0;
 volatile int pwm1 = 0;
 void setNowState(AsyncWebServerRequest *request) {
     AsyncResponseStream *response = request->beginResponseStream("application/json");
-    DynamicJsonBuffer jsonBuffer;
-    JsonObject &root = jsonBuffer.createObject();
+    DynamicJsonDocument root(1024);
     // root["heap"] = ESP.getFreeHeap();
     // root["ssid"] = WiFi.SSID();
     root["mode"] = mode == PWM ? "PWM" : 
@@ -203,7 +202,7 @@ void setNowState(AsyncWebServerRequest *request) {
     root["pwm0"] = pwm0;
     root["pwm1"] = pwm1;
     root["maxpwm"] = MAX_PWM_DUTY;
-    root.printTo(*response);
+    serializeJson(root, *response);
     request->send(response);
 }
 
@@ -267,7 +266,7 @@ void setup() {
     Serial.begin(115200);
     Serial.println("movduino.ino    created on 2018/6/13 by wuyuepku");
     wiFiMulti.addAP("CDMA", "1877309730");  // this is my WIFI hotspot, you can add your own here
-    wiFiMulti.addAP("SOAR_513", "soar@ceca");
+    wiFiMulti.addAP("RetroTurbo", "soar@ceca");
 
     #ifdef ENABLE_HALL_SPEED_MEANSUREMENT
     RawSerial.begin(115200, SERIAL_8N1, RawRx, RawTx);
@@ -332,6 +331,10 @@ void setup() {
         }
         setNowState(request);
     });
+    server.on("/signal", HTTP_POST, [](AsyncWebServerRequest *request){
+        Serial.print("t");
+        request->send(200, "text/plain", "Signal Sent.");
+    });
 
     server.onNotFound([](AsyncWebServerRequest *request){
         request->send(404, "text/plain", "Not found");
@@ -347,7 +350,7 @@ void setup() {
     pinMode(M1N, OUTPUT);
     pinMode(M2P, OUTPUT);
     pinMode(M2N, OUTPUT);
-
+ 
     #if defined USING_INTERRUPT_DETECT_SPEED && defined ENABLE_HALL_SPEED_MEANSUREMENT
         attachInterrupt(M1A, motor_INT, CHANGE);  // all link to one interrupt function
         attachInterrupt(M1B, motor_INT, CHANGE);
