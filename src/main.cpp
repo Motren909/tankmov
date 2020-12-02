@@ -267,6 +267,7 @@ void setup() {
     Serial.println("movduino.ino    created on 2018/6/13 by wuyuepku");
     wiFiMulti.addAP("CDMA", "1877309730");  // this is my WIFI hotspot, you can add your own here
     wiFiMulti.addAP("RetroTurbo", "soar@ceca");
+    wiFiMulti.addAP("BeyondVisualRangeSensing", "bvrbvrbvr");
 
     #ifdef ENABLE_HALL_SPEED_MEANSUREMENT
     RawSerial.begin(115200, SERIAL_8N1, RawRx, RawTx);
@@ -331,7 +332,7 @@ void setup() {
         }
         setNowState(request);
     });
-    server.on("/signal", HTTP_POST, [](AsyncWebServerRequest *request){
+    server.on("/signal", HTTP_GET, [](AsyncWebServerRequest *request){
         Serial.print("t");
         request->send(200, "text/plain", "Signal Sent.");
     });
