@@ -332,9 +332,12 @@ void setup() {
         }
         setNowState(request);
     });
-    server.on("/signal", HTTP_GET, [](AsyncWebServerRequest *request){
-        Serial.print("t");
-        request->send(200, "text/plain", "Signal Sent.");
+    server.on("/signal", HTTP_POST, [](AsyncWebServerRequest *request){
+        if (request->hasParam("cmd", true)) {
+            const char *cmd = request->getParam("cmd", true)->value().c_str();
+            Serial.print(cmd);
+            request->send(200, "text/plain", "Signal Sent.");
+        }
     });
 
     server.onNotFound([](AsyncWebServerRequest *request){

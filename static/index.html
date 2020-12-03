@@ -59,7 +59,8 @@
         <button type="button" class="btn btn-primary basic-button" onclick="setMode('PID');">PID mode</button>
         <button type="button" class="btn btn-warning basic-button" onclick="setMode('PWM');">PWM mode</button>
         <button type="button" class="btn btn-success basic-button" onclick="sync();" style="width:60px; float: right;">Sync</button>
-        <button type="button" class="btn btn-success basic-button" onclick="signal();" style="width:80px; float: right;">Signal</button>
+        <button type="button" class="btn btn-success basic-button" onclick="signal('t');" style="width:80px; float: right;">Stop</button>
+        <button type="button" class="btn btn-success basic-button" onclick="signal('s');" style="width:80px; float: right;">Resume</button>
     </div>
     <hr style="filter: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 size=3>
     <div>
@@ -241,8 +242,10 @@
     }
 
 
-    function signal(){
-        $.get("signal", function(result) {
+    function signal(c){
+        $.post("signal", {
+            cmd:c
+        }, function(result) {
             updateView(result);
         });
     }
