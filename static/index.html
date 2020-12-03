@@ -71,7 +71,7 @@
         Max PWM: <strong id="maxpwm">UNKNOWN</strong><br/>
     </div>
     <hr style="filter: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 size=3>
-    <div id="PWMPanel">
+    <div id="PWMPanel" style="text-align:center;">
         <strong>Left Wheel PWM (-100 ~ 100)</strong>
         <div class="input-group">
             <div class="input-group-prepend">
@@ -119,11 +119,21 @@
             <input id="PWMadj2" data-slider-id='PWMadj2Slider' type="text" data-slider-min="-100" data-slider-max="100" data-slider-step="1" data-slider-value="0"/>
             <button type="button" class="btn btn-danger" onclick="slider2.slider('setValue', 0); updateSlider();" style="margin-left: 10px;">0</button>
         </div>
-        <input type="number" id="pwmbase" value="300" class="form-control" style="width: 80px; display: inline-block;">
-        <button type="button" class="btn btn-warning" onclick="setdirection(-1,1)">left</button>
-        <button type="button" class="btn btn-success" onclick="setdirection(1,1)">ahead</button>
-        <button type="button" class="btn btn-danger" onclick="setdirection(-1,-1)">back</button>
-        <button type="button" class="btn btn-warning" onclick="setdirection(1,-1)">right</button>
+        <input type="number" id="pwmbase" value="900" class="form-control" style=" margin: 0 auto;width: 80px; display: inline-block;">
+        <div style="text-align:center;">
+   
+            <button type="button" class="btn btn-success" onclick="setdirection(1,1)">ahead</button>
+        </div>
+        <div style="text-align:center;">
+            
+            <button  style = "margin: 0 auto;" type="button" class="btn btn-primary" onclick="setdirection(-1,1)">rotate left</button>
+            <button style = "margin: 0 auto;" type="button" class="btn btn-warning" onclick="setdirection(0.6,1)">left</button>
+            <button style = "margin: 0 auto;" type="button" class="btn btn-warning" onclick="setdirection(1,0.6)">right</button>
+            <button style = "margin: 0 auto;" type="button" class="btn btn-primary" onclick="setdirection(1,-1)">rotate right</button>
+        </div>
+        <div style="text-align:center;">
+            <button type="button" class="btn btn-danger" onclick="setdirection(-1,-1)">back</button>
+        </div>
         <br>
         <button type="button" class="btn btn-danger" style="width: 100%; margin: 10px 0 10px 0;" onclick="setdirection(0,0)">stop</button>
     </div>
